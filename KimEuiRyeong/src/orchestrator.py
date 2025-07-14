@@ -1,14 +1,18 @@
 from typing import List, Callable, Union
 import os
 
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage, SystemMessage, AIMessage, ToolMessage
 from langchain_core.documents import Document
 
 from src.llm import LLM
-
+from src.tools.get_weather import get_us_state_weather_alerts
 from src.rag.vector_store import VectorStore
 from src.rag.document_loader import DocumentLoader
+
+# ADD by EUIRYEONG
 from src.rag.document_saver import DocumentSaver
+
+# ADD by EUIRYEONG
 from src.config import VECTOR_STORE_INDEX_NAME, RAG_DOCUMENTS_FOLDER_NAME
 
 class Orchestrator:
@@ -21,6 +25,13 @@ class Orchestrator:
         response: str = llm.invoke(prompt)
         return response
 
+    def query_llm_with_tools(self, query: str) -> str:
+        tools: List[Callable] = [get_us_state_weather_alerts]
+        llm = LLM(tools=tools)
+        prompt: List[Union[HumanMessage, SystemMessage, AIMessage, ToolMessage]] = [HumanMessage(query)]
+        response: str = llm.invoke_with_tools(prompt)
+        return response
+    
     def upload_docs_to_rag(self, path: str) -> List[str]:
         self.vector_store.get_index_ready()
         document_loader = DocumentLoader()
@@ -49,6 +60,7 @@ class Orchestrator:
             raise Exception("Vectors cannot be deleted as index doesn't exist.")
         return self.vector_store.delete_all_vectors()
     
+    # ADD by EUIRYEONG
     def save_financial_reports(self):
         document_saver = DocumentSaver()
         filtered_dict = document_saver.filter_corp_codes_by_name()
