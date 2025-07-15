@@ -4,6 +4,7 @@ import requests
 import re
 from dotenv import load_dotenv
 
+
 # LangChain core
 from langchain_core.tools import tool
 from langchain_core.output_parsers import StrOutputParser
@@ -26,12 +27,15 @@ from difflib import get_close_matches
 # Load environment variables
 load_dotenv()
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+faiss_path1 = os.path.join(current_dir, "faiss_index3")
+faiss_path2 = os.path.join(current_dir, "faiss_index_bge_m3")
 
 embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-m3")
 
 # 회계기준서 벡터 db
 vector_db1 = FAISS.load_local(
-    "faiss_index3",
+    faiss_path1,
     embeddings,
     allow_dangerous_deserialization=True
 )
@@ -44,7 +48,7 @@ accounting_retriever = vector_db1.as_retriever(
 
 # 사업보고서 벡터 db
 vector_db2 = FAISS.load_local(
-    "faiss_index_bge_m3",
+    faiss_path2,
     embeddings,
     allow_dangerous_deserialization=True
 )
