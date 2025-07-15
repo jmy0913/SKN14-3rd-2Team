@@ -28,7 +28,6 @@ from difflib import get_close_matches
 load_dotenv()
 
 
-@st.cache_resource
 def faiss_retriever_loading():
     current_dir = os.path.dirname(os.path.abspath(__file__))
     faiss_path1 = os.path.join(current_dir, "faiss_index3")

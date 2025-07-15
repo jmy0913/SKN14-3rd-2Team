@@ -1,7 +1,7 @@
-from chain_setting import create_chain
-from retreiver_setting import faiss_retriever_loading
-from normalize_code_search import find_corporation_code, normalize_company_name, parse_extracted_text
-from api_get import get_financial_state
+from .normalize_code_search import find_corporation_code, normalize_company_name, parse_extracted_text
+from .retreiver_setting import faiss_retriever_loading
+from .api_get import get_financial_state
+from .chain_setting import create_chain
 
 simple_chain, classification_chain, account_chain, extract_chain, business_chain, hybrid_chain, financial_chain = create_chain()
 
@@ -31,7 +31,7 @@ def handle_financial(question: str) -> str:
     extracted_text = extract_chain.invoke({"question": question})
     extracted = parse_extracted_text(extracted_text)
 
-    corp_code = find_corporation_code.invoke(extracted["company"])
+    corp_code = find_corporation_code(extracted["company"])
     years = extracted.get("year_list", ["2024"])
 
     # 재무제표 연도별 구조화
