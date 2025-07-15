@@ -171,7 +171,6 @@ financial_prompt = PromptTemplate.from_template("""
 질문: {question}
 """)
 
-@st.cache_resource
 def create_chain():
     simple_llm = ChatOpenAI(
         model='gpt-4o-mini',
