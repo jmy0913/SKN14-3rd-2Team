@@ -3,6 +3,7 @@ import re
 import os
 import json
 
+
 # 입력된 회사명을 corp_list에 있는 회사명 중 가장 유사한 회사명으로 정규화
 def normalize_company_name(user_input: str, corp_list: list[dict]) -> str:
     # 입력 정규화

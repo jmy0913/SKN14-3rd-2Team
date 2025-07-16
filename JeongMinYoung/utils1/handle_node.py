@@ -17,8 +17,9 @@ def handle_accounting(question: str) -> str:
 # 사업보고서 질문 답변 분기 함수
 def handle_business(question: str) -> str:
     print("📥 business 처리 시작")
-    docs = business_retriever2.invoke(question)
-    # docs = self_retriever.get_relevant_documents(question)
+    # docs = business_retriever.invoke(question)
+    # docs = business_retriever2.invoke(question)
+    docs = self_retriever.get_relevant_documents(question)
     context = "\n\n".join(doc.page_content for doc in docs)
 
     return business_chain.invoke({"context": context, "question": question})
