@@ -48,7 +48,7 @@ def faiss_retriever_loading():
     accounting_retriever = vector_db1.as_retriever(
         search_type='similarity',
         search_kwargs={
-            'k': 5,
+            'k': 10
         })
 
     # 사업보고서 벡터 db
@@ -111,11 +111,10 @@ def preprocess(text):
     tokens = tokenizer.tokenize(text)  # BERT tokenizer로 단어 분리
     return tokens
 
-# BM25 점수 계산
 def calculate_bm25(query, documents):
-    doc_tokens = [preprocess(doc) for doc in documents]  # 문서 전처리
+    # 문서에서 텍스트만 추출
+    doc_tokens = [preprocess(doc.page_content) for doc in documents]  # 문서 전처리
     bm25 = BM25Okapi(doc_tokens)  # BM25 모델 초기화
     query_tokens = preprocess(query)  # 쿼리 전처리
-    bm25_scores = bm25.get_scores(query_tokens)  # BM25 점수 계산
-    return bm25_scores
+    return bm25.get_scores(query_tokens)  # BM25 점수 계산
 
