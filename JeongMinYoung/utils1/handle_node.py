@@ -14,11 +14,6 @@ accounting_retriever, business_retriever, business_retriever2, self_retriever = 
 def handle_accounting(question: str) -> str:
     print("📥 accounting 처리 시작")
     docs = accounting_retriever.invoke(question)
-    bm25_scores = calculate_bm25(question, docs)
-    docs = sorted(zip(docs, bm25_scores), key=lambda x: x[1], reverse=True)[:5]
-    docs = [doc for doc, score in docs]
-    if docs:
-        print(docs)
     context = "\n\n".join(doc.page_content for doc in docs)
     return account_chain.invoke({"context": context, "question": question})
 
