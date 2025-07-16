@@ -48,7 +48,7 @@ def faiss_retriever_loading():
     accounting_retriever = vector_db1.as_retriever(
         search_type='similarity',
         search_kwargs={
-            'k': 10
+            'k': 6
         })
 
     # 사업보고서 벡터 db
