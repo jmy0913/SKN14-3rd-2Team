@@ -1,16 +1,21 @@
 from .normalize_code_search import find_corporation_code, normalize_company_name, parse_extracted_text
-from .retreiver_setting import faiss_retriever_loading
+from .retreiver_setting import faiss_retriever_loading, preprocess, calculate_bm25
 from .api_get import get_financial_state
 from .chain_setting import create_chain
+import os
+from langchain.chat_models import ChatOpenAI
 
 simple_chain, classification_chain, account_chain, extract_chain, business_chain, hybrid_chain, financial_chain = create_chain()
 
 accounting_retriever, business_retriever, business_retriever2, self_retriever = faiss_retriever_loading()
 
+
 # 회계 질문 답변 분기 함수
 def handle_accounting(question: str) -> str:
     print("📥 accounting 처리 시작")
     docs = accounting_retriever.invoke(question)
+    bm25_scores = calculate_bm25(question, docs)
+    docs = sorted(zip(docs, bm25_scores), key=lambda x: x[1], reverse=True)[:5]
     context = "\n\n".join(doc.page_content for doc in docs)
     return account_chain.invoke({"context": context, "question": question})
 

@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 
-
+from transformers import BertTokenizer
 
 from langchain.retrievers.self_query.base import SelfQueryRetriever
 from langchain.chains.query_constructor.schema import AttributeInfo
@@ -10,9 +10,17 @@ from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 
 
+from langchain.embeddings import OpenAIEmbeddings  # OpenAIEmbeddings 임포트 추가
+from langchain_openai import ChatOpenAI
+
 # Pinecone import
 from pinecone import Pinecone, ServerlessSpec
 from langchain_pinecone import PineconeVectorStore
+
+from rank_bm25 import BM25Okapi
+from nltk.tokenize import word_tokenize
+import string
+import os
 
 # Load environment variables
 load_dotenv()
@@ -96,4 +104,18 @@ def faiss_retriever_loading():
 
     return accounting_retriever, business_retriever, business_retriever2, self_query_retriever
 
+# 한국어 형태소 분석기
+def preprocess(text):
+    tokenizer = BertTokenizer.from_pretrained('kykim/bert-kor-base')
+    # BERT tokenizer를 사용하여 텍스트 토큰화
+    tokens = tokenizer.tokenize(text)  # BERT tokenizer로 단어 분리
+    return tokens
+
+# BM25 점수 계산
+def calculate_bm25(query, documents):
+    doc_tokens = [preprocess(doc) for doc in documents]  # 문서 전처리
+    bm25 = BM25Okapi(doc_tokens)  # BM25 모델 초기화
+    query_tokens = preprocess(query)  # 쿼리 전처리
+    bm25_scores = bm25.get_scores(query_tokens)  # BM25 점수 계산
+    return bm25_scores
 
