@@ -75,3 +75,4 @@ if st.button("🔍 검색", type="primary"):
         except Exception as e:
             st.write(e)
 
+
