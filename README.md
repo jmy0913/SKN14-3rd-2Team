@@ -28,7 +28,7 @@
       <img src="image/jmy.png" width="150" alt="정민영 사진"/>
     </td>
     <td align="center">
-      <img src="image/jjg.png" width="150" alt="정전규 사진"/>
+      <img src="image/jjg.jpg" width="150" alt="정전규 사진"/>
     </td>
   </tr>
   <tr>
@@ -54,15 +54,15 @@
 </table>
 
 ### 역할 분배
-| 작업명          | 담당자       | 산출물            |
-|:-------------|:----------|:---------------|
-| 프로젝트 주제 선정   | 전체 팀원     |                |
-| 데이터 수집 및 전처리 | 전체 팀원     | CSV 파일, API 호출 |
-| 모델 개발        | 정민영       | 파이썬 파일         |
-| streamlit 개발 | 김의령, 전정규  | Streamlit 파일   |
-| README 작성    | 김광령       | README.md 파일   |
-| ppt 제작       | 강윤구, 이원지희 | PPT            |
-| 발표           | 강윤구       |                |
+| 작업명          | 담당자       | 산출물          |
+|:-------------|:----------|:-------------|
+| 프로젝트 주제 선정   | 전체 팀원     |              |
+| 데이터 수집 및 전처리 | 전체 팀원     | CSV 파일       |
+| 모델 개발        | 정민영       | 파이썬 파일       |
+| streamlit 개발 | 김의령, 전정규  | Streamlit 파일 |
+| README 작성    | 김광령       | README.md 파일 |
+| ppt 제작       | 강윤구, 이원지희 | PPT          |
+| 발표           | 강윤구       |              |
 
 ## 2️⃣ 프로젝트 개요
 ### 프로젝트 필요성
@@ -81,6 +81,7 @@
 - 요즘 gpt나 gemini 같은 수많은 생성형 ai 사이트들이 있지만 이런 곳에서도 기업의 사업 보고서 같은 세부적인 내용은 알기 힘듭니다.
 그렇기 때문에 환각 현상이 발생하여 원하는 정보를 얻지 못할 수 있습니다.
 
+<hr>
 
 ### 프로젝트 목표
 
@@ -104,6 +105,10 @@
 
 - 사용자가 PC에서 쉽게 접근할 수 있도록 직관적인 웹 챗봇 인터페이스 제공.
 
+**6. 질문자가 원하는 수준에 따라 답변 수준 분류**
+
+- 답변을 간단하고 쉽게 설명해주는 초급부터 구체적이고 전문적인 고급까지 답변 수준을
+분류하여 설명
 
 <hr>
 
@@ -113,7 +118,7 @@
 | **Language** | ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![LangChain](https://img.shields.io/badge/LangChain-00863D?style=for-the-badge&logo=langchain&logoColor=white) ![RAG](https://img.shields.io/badge/RAG-8A2BE2?style=for-the-badge&logoColor=white) |
 | **Development** | ![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white) ![PyCharm](https://img.shields.io/badge/PyCharm-000000?style=for-the-badge&logo=pycharm&logoColor=white)                                                                           |
 | **Embedding** | ![BAAI/bge-m3](https://img.shields.io/badge/BAAI/bge--m3-000000?style=for-the-badge&logo=huggingface&logoColor=white)                                                                                                                                                                                    |
-| **LLM Model** | ![Chat GPT-4.1](https://img.shields.io/badge/ChatGPT--4o--mini-4B91FF?style=for-the-badge&logo=openai&logoColor=white)                                                                                                                                                                                   |
+| **LLM Model** | ![Chat GPT-4o](https://img.shields.io/badge/ChatGPT--4o--mini-4B91FF?style=for-the-badge&logo=openai&logoColor=white)                                                                                                                                                                                    |
 | **Collaboration Tool** | ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)                                                                                                                                                                                                             |
 | **Vector DB** | ![FAISS](https://img.shields.io/badge/FAISS-4B8BEA?style=for-the-badge&logo=facebook&logoColor=white) ![Pinecone](https://img.shields.io/badge/Pinecone-3B77DD?style=for-the-badge&logo=pinecone&logoColor=white)                                                                                        |
 | **API 활용** | ![Open Dart API](https://img.shields.io/badge/Open%20DART%20API-002D61?style=for-the-badge&logoColor=white)                                                                                                                                                                                              |
@@ -121,28 +126,23 @@
 
 ```markdown
 SKN14-3rd-2Team/
-└── 📁 Model/ 
-    ├── 📁 faiss_index3/ # FAISS 벡터 인덱스 및 관련 데이터 저장소
-    │   ├── index.faiss
-    │   └── index.pkl
-    │
-    ├── 📁 utils/          # 유틸리티 모듈 (내용 미표시)
-    └── 📁 utils1/         # 핵심 유틸리티 및 설정 모듈
-    │   ├── __init__.py
-    │   ├── api_get.py  # api를 받아오는 함수가 들어있는 파일
-    │   ├── chain_setting.py  # 체인을 생성해주는 함수가 들어있는 파일
-    │   ├── corp_list.json  # 기업 리스트가 저장된 json 파일
-    │   ├── handle_node.py  # 질문 유형에 따라 실행되는 호출 함수를 저장한 파일
-    │   ├── main.py  # 
-    │   ├── normalize_code_search.py  # 질문을 읽기 쉽게 가공하는 함수가 들어있는 파일
-    │   └── retreiver_setting.py  # 각종 리트리버 생성 함수가 저장된 파일
-    │
-    ├── app.py                     # 메인 애플리케이션 실행 파일
-    ├── Dart_open_api_test.ipynb   # DART API 테스트용 노트북
-    ├── Faiss+Retriever.ipynb      # Faiss 및 Retriever 테스트용 노트북
-    ├── main_run.ipynb             # 메인 로직 실행 테스트용 노트북
-    ├── prompt_test.ipynb          # 프롬프트 테스트용 노트북
-    └── requirements.txt           # 프로젝트 의존성 라이브러리 목록
+└── 📁 JeonJungKyu/
+    └── 📁 test-nt2/
+        ├── 📁 icon/                     # 아이콘 등 UI 리소스 저장소
+        │
+        ├── 📁 utils1/                  # 핵심 로직 및 유틸리티 패키지
+        │   ├── 📁 faiss_index3/        # FAISS 벡터 인덱스 저장소 1
+        │   ├── 📁 faiss_index_bge_m3/   # FAISS 벡터 인덱스 저장소 2 (bge-m3 모델 기반)
+        │   ├── __init__.py           
+        │   ├── api_get.py            # 외부 API 키를 안전하게 불러오는 함수
+        │   ├── chain_setting.py      # LangChain/LangGraph 체인 및 프롬프트 설정
+        │   ├── corp_list.json        # 기업 코드 목록 (JSON 데이터)
+        │   ├── handle_node.py        # LangGraph의 각 노드(Node) 로직 정의
+        │   ├── main.py               # 전체 RAG 흐름을 제어하는 메인 컨트롤러
+        │   ├── normalize_code_search.py # 기업명/코드 검색 및 정규화
+        │   └── retreiver_setting.py  # Retriever 객체 생성 및 설정
+        │
+        └── ffinal.py                   # Streamlit 웹 애플리케이션 실행 파일
 ```
 <hr>
 
@@ -178,17 +178,16 @@ SKN14-3rd-2Team/
 
 
 - 혼합 접근 (Hybrid)
-만약 질문이 복합적이면 → 벡터 검색 + DART API 병행
-<br>예시 : “작년 매출이랑 무슨 사업 하는지 알려줘”
+만약 질문이 복합적이면 벡터db 검색 + DART API 병행
+<br>예시 : “작년 매출과 무슨 사업을 했는지 알려줘”
 
-4. 답변 생성 (LLM 기반 생성)
+- 답변 생성 (LLM 기반 생성)
 검색된 자료를 기반으로 LLM 모델이 답변을 생성합니다.<br>
 예시 : “현대차는 2024년 대비 약 20% 매출이 증가하여, 2025년 총 140조 원의 매출을 기록했습니다.”
 
 <hr>
 
-##  5️⃣ 코드 설명 및 테스트
-### 코드 설명
+##  5️⃣ 중요 코드 설명
 #### 1. `api_get.py`
 - `get_financial_state(corp_code, bsns_year, reprt_code, fs_div)`: DART 서버에 접속해 특정 회사의 해당 연도 재무제표 데이터를 API로 요청하고, 
 그 결과를 사람이 읽기 좋은 문자열 리스트로 가공하여 반환합니다.
@@ -254,17 +253,14 @@ DART 서버에서 실시간 재무제표 데이터를 조회합니다.
 
 ## 6️⃣ 스트림릿 구현
 
-**페이지1**
-  <img src="" width="auto" alt="화면1"/>
-
-**페이지2**
-  <img src="" width="auto" alt="화면2"/>
+**메인 페이지**
+  <img src="image/메인 페이지.png" width="auto" alt="화면1"/>
 
 
 ### 테스트 진행
 
 - **테스트 목적**  
-  챗봇이 질문에 맞는 대답을 찾지 못하거나 환각 현상이 일어남을 방지하기 위함
+  챗봇이 질문에 맞는 대답을 찾지 못하거나 환각 현상이 일어남을 방지하기 위함.
 
 
 - **테스트 환경**  
@@ -273,29 +269,47 @@ DART 서버에서 실시간 재무제표 데이터를 조회합니다.
   - 외부 API: Open Dart API
 
 
-- **결과**
-  <img src="" width="auto" alt="결과1"/><br>
+- **결과**<br>
+  <img src="image/결과1.png" width="auto" alt="결과1"/><br>
+  <img src="image/결과2.png" width="auto" alt="결과2"/><br> 
 
-  <img src="" width="auto" alt="결과2"/> 
+
+### 추가 구현 사항
+**채팅창 옆에 뉴스와 주식을 볼 수 있는 칸을 구현하여 기업에 관한 정보를 많이 습득할 수 있도록 하였습니다.**
+#### 1. 뉴스
+<img src="image/뉴스.png" width="300" alt="뉴스"/><br>
+- 밑의 입력창에 기업명을 적으면 그 기업과 관련된 기사들이 뜨게 됩니다.
+
+#### 2. 주식
+<img src="image/주식.png" width="300" alt="주식"/><br>
+- 입력창에 기업명을 적으면 그 기업의 주식 정보가 뜨게 됩니다.
 
 <hr>
 
 ## 7️⃣ 성능 개선 노력
 - **벡터db와 api 동시 사용**
 
-  - 벡터db 안에 모든 데이터를 넣는 것은 여건상 불가능했고 넣은 데이터 중에서도 질문에 대한 정확한 대답을 내지
-  못하는 경우도 있었기 때문에 API를 같이 활용하였습니다.
+  - 저희 챗봇은 정적 데이터 검색을 위한 벡터 DB와 동적 정보 조회를 위한 실시간 API를 
+  결합한 하이브리드 검색 구조를 구현했습니다. 이 접근법은 벡터 DB에 모든 데이터를 
+  저장하는 것의 현실적인 제약을 극복하고, 내장 데이터만으로는 답변할 수 없는 최신 정보나 
+  외부 데이터 기반의 질문에 효과적으로 대응할 수 있습니다.
   
  
 - **질문 유형 다양화**
 
-  - 질문 프롬프트를 작성하여 질문의 유형을 크게 5개로 나눴고 그 유형에 맞는 각각의 전문 
-  chain과 retriever를 만들어 질문의 전문성을 높였습니다. 
+  - 사용자 질문의 복잡성과 다양성에 대응하기 위해, 질문의 의도를 5가지 유형으로 먼저 
+  분류하는 의도 분류 단계를 도입했습니다. 분류된 유형에 따라
+  각기 다른 전문 체인과 리트리버가 동적으로 선택되어 질문을 처리합니다. 이러한 멀티-체인 
+  아키텍처는 단일 파이프라인 방식보다 훨씬 더 정교하고 맥락에 맞는 답변을 생성하여 응답의 
+  전문성을 극대화합니다.
   
 
 - **메타 데이터 사용** 
   
-  - 메타 데이터를 사용하여 답변 속도와 정확도를 높이기 위해 노력했습니다.
+  - 답변의 속도와 정확도를 향상시키기 위해 벡터 데이터에 날짜, 회사명 등의 메타 데이터를 
+  결합했습니다. 벡터 유사도 검색을 수행하기 전, 이 메타 데이터를 기준으로 사전 필터링을 
+  적용하여 검색해야 될 양을 줄였습니다. 이 방식은 관련 없는 데이터를 미리 제외함으로써
+  검색 속도를 높이고, 문맥에 더 적합한 결과를 찾아내어 최종 답변의 정확도를 높였습니다.
 
 <hr>
 
