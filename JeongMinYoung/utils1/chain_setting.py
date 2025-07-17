@@ -20,8 +20,12 @@ from langchain_openai import ChatOpenAI
 load_dotenv()
 
 
+
 classification_prompt = PromptTemplate.from_template("""
 다음 질문을 분석하여 **주요 목적**에 따라 작업 유형을 분류하세요.
+
+작업유형: <type>
+
 
 ## 📋 분류 기준 (우선순위 순)
 
@@ -108,6 +112,7 @@ classification_prompt = PromptTemplate.from_template("""
 - `<type>`은 오직 [accounting, finance, business, hybrid, else] 중 하나만 사용
 - 특수문자나 불필요한 설명 없이 형식만 출력할 것
 """)
+
 
 
 # 초급용: 개념 이해 챗봇 프롬프트
