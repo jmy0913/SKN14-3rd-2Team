@@ -49,16 +49,27 @@ class VectorStore:
         list_of_ids: List[str] = vs_index.add_documents(documents=documents, ids=uuids)
         return list_of_ids
     
-    def similarity_search(self, query: str) -> List[str]:
+    def similarity_search(self, query: str, k: int = 4) -> List[Document]:
+        """유사도 검색을 수행합니다."""
         vs_index: PineconeVectorStore = self.get_index()
-        results: List[Document] = vs_index.similarity_search(
-            query,
-            k=3
-        )
-        results_contents: List[str] = [result.page_content for result in results]
-        return results_contents
+        results = vs_index.similarity_search(query, k=k)
+        return results
+    
+    def get_index_stats(self) -> dict:
+        """인덱스 통계를 가져옵니다."""
+        try:
+            index = self.pc.Index(self.index_name)
+            stats = index.describe_index_stats()
+            return stats
+        except Exception as e:
+            return {"error": str(e)}
     
     def delete_all_vectors(self) -> None:
-        vs_index: PineconeVectorStore = self.get_index()
-        return vs_index.delete(delete_all=True)
+        """인덱스의 모든 벡터를 삭제합니다."""
+        try:
+            index = self.pc.Index(self.index_name)
+            index.delete(delete_all=True)
+            print(f"[SUCCESS] 인덱스 '{self.index_name}'의 모든 벡터 삭제 완료")
+        except Exception as e:
+            print(f"[ERROR] 벡터 삭제 실패: {e}")
         
